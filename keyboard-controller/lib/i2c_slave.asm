@@ -24,7 +24,7 @@
 ;    VARIABLES                                                                 *
 ;*******************************************************************************
 GRP_I2C   UDATA
-I2C_RW_MODE	    RES 1   ; 0 = read mode; 1 = write mode
+I2C_RW_MODE	    RES 1   ; 0 = master wants to read; 1 = master wants to write
     
 ;*******************************************************************************
 ;    MACROS                                                                    *
@@ -104,9 +104,6 @@ I2C_TXRX_DO_ISR
     banksel SSPBUF
     movf    SSPBUF, w		 ; read (discharge buffer)    
 
-    banksel SSPCON
-    btfsc   SSPCON, CKP		 ; discard interrupt if CKP is up (master ended)
-    goto I2C_TxRx_End
     ;goto I2C_TxRx_Tx
     
     banksel SSPSTAT
@@ -115,14 +112,18 @@ I2C_TXRX_DO_ISR
     
 I2C_TxRx_Address:
     banksel I2C_RW_MODE
-    bsf	    I2C_RW_MODE, 0	; set to write mode
+    bsf	    I2C_RW_MODE, 0	; set to master-wants-to-write
     banksel SSPSTAT
     btfss   SSPSTAT, R_NOT_W    ; receive or write request?
     goto I2C_TxRx_End
     
     ; read request
+    banksel SSPCON
+    btfsc   SSPCON, CKP		 ; discard interrupt if CKP is up (master end)
+    goto I2C_TxRx_End
+    
     banksel I2C_RW_MODE
-    bcf	    I2C_RW_MODE, 0	; set to write mode
+    bcf	    I2C_RW_MODE, 0	; set to master-wants-to-read
     
     ; return buffer available size
     txrx_buffer_tx_size_w
@@ -145,6 +146,10 @@ I2C_TxRx_Rx:
     goto I2C_TxRx_End
 
 I2C_TxRx_Tx:
+    banksel SSPCON
+    btfsc   SSPCON, CKP		 ; discard interrupt if CKP is up (master end)
+    goto I2C_TxRx_End
+    
     txrx_buffer_tx_skip_if_empty
     goto I2C_TxRx_TxData
     

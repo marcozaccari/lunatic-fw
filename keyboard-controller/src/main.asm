@@ -258,12 +258,14 @@ MAIN_LOOP
     goto MAIN_LOOP
     txrx_get_rx_w
     movwf   TEMP1
+    ;txrx_tx_w
+    ;movf   TEMP1, w
     andlw   0xFE
     sublw   0x80
     btfss   STATUS, Z	; received 0x80 or 0x81
     goto MAIN_LOOP
     bcf	    GLOBAL_FLAGS, GLOBAL_FLAG_NOTEOFF_VELOCITY
-    btfss   TEMP1, 0
+    btfsc   TEMP1, 0
     bsf	    GLOBAL_FLAGS, GLOBAL_FLAG_NOTEOFF_VELOCITY
     
     goto MAIN_LOOP
