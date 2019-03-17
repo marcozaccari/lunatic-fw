@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=
+SOURCEFILES_QUOTED_IF_SPACED=src/main.asm lib/i2c_slave.asm lib/misc.asm lib/txrx.asm lib/txrx_buffer.asm src/buttons.asm
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=
-POSSIBLE_DEPFILES=
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/main.o ${OBJECTDIR}/lib/i2c_slave.o ${OBJECTDIR}/lib/misc.o ${OBJECTDIR}/lib/txrx.o ${OBJECTDIR}/lib/txrx_buffer.o ${OBJECTDIR}/src/buttons.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/src/main.o.d ${OBJECTDIR}/lib/i2c_slave.o.d ${OBJECTDIR}/lib/misc.o.d ${OBJECTDIR}/lib/txrx.o.d ${OBJECTDIR}/lib/txrx_buffer.o.d ${OBJECTDIR}/src/buttons.o.d
 
 # Object Files
-OBJECTFILES=
+OBJECTFILES=${OBJECTDIR}/src/main.o ${OBJECTDIR}/lib/i2c_slave.o ${OBJECTDIR}/lib/misc.o ${OBJECTDIR}/lib/txrx.o ${OBJECTDIR}/lib/txrx_buffer.o ${OBJECTDIR}/src/buttons.o
 
 # Source Files
-SOURCEFILES=
+SOURCEFILES=src/main.asm lib/i2c_slave.asm lib/misc.asm lib/txrx.asm lib/txrx_buffer.asm src/buttons.asm
 
 
 CFLAGS=
@@ -94,7 +94,103 @@ MP_LINKER_DEBUG_OPTION=-r=ROM@0x1F00:0x1FFE -r=RAM@SHARE:0x70:0x70 -r=RAM@SHARE:
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: assemble
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
+${OBJECTDIR}/src/main.o: src/main.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/main.o.d 
+	@${RM} ${OBJECTDIR}/src/main.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/src/main.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PICKIT2=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/src/main.lst\\\" -e\\\"${OBJECTDIR}/src/main.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/src/main.o\\\" \\\"src/main.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/src/main.o"
+	@${FIXDEPS} "${OBJECTDIR}/src/main.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/lib/i2c_slave.o: lib/i2c_slave.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/lib" 
+	@${RM} ${OBJECTDIR}/lib/i2c_slave.o.d 
+	@${RM} ${OBJECTDIR}/lib/i2c_slave.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/lib/i2c_slave.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PICKIT2=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/lib/i2c_slave.lst\\\" -e\\\"${OBJECTDIR}/lib/i2c_slave.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/lib/i2c_slave.o\\\" \\\"lib/i2c_slave.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/lib/i2c_slave.o"
+	@${FIXDEPS} "${OBJECTDIR}/lib/i2c_slave.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/lib/misc.o: lib/misc.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/lib" 
+	@${RM} ${OBJECTDIR}/lib/misc.o.d 
+	@${RM} ${OBJECTDIR}/lib/misc.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/lib/misc.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PICKIT2=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/lib/misc.lst\\\" -e\\\"${OBJECTDIR}/lib/misc.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/lib/misc.o\\\" \\\"lib/misc.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/lib/misc.o"
+	@${FIXDEPS} "${OBJECTDIR}/lib/misc.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/lib/txrx.o: lib/txrx.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/lib" 
+	@${RM} ${OBJECTDIR}/lib/txrx.o.d 
+	@${RM} ${OBJECTDIR}/lib/txrx.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/lib/txrx.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PICKIT2=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/lib/txrx.lst\\\" -e\\\"${OBJECTDIR}/lib/txrx.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/lib/txrx.o\\\" \\\"lib/txrx.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/lib/txrx.o"
+	@${FIXDEPS} "${OBJECTDIR}/lib/txrx.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/lib/txrx_buffer.o: lib/txrx_buffer.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/lib" 
+	@${RM} ${OBJECTDIR}/lib/txrx_buffer.o.d 
+	@${RM} ${OBJECTDIR}/lib/txrx_buffer.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/lib/txrx_buffer.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PICKIT2=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/lib/txrx_buffer.lst\\\" -e\\\"${OBJECTDIR}/lib/txrx_buffer.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/lib/txrx_buffer.o\\\" \\\"lib/txrx_buffer.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/lib/txrx_buffer.o"
+	@${FIXDEPS} "${OBJECTDIR}/lib/txrx_buffer.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/src/buttons.o: src/buttons.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/buttons.o.d 
+	@${RM} ${OBJECTDIR}/src/buttons.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/src/buttons.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PICKIT2=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/src/buttons.lst\\\" -e\\\"${OBJECTDIR}/src/buttons.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/src/buttons.o\\\" \\\"src/buttons.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/src/buttons.o"
+	@${FIXDEPS} "${OBJECTDIR}/src/buttons.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
 else
+${OBJECTDIR}/src/main.o: src/main.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/main.o.d 
+	@${RM} ${OBJECTDIR}/src/main.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/src/main.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/src/main.lst\\\" -e\\\"${OBJECTDIR}/src/main.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/src/main.o\\\" \\\"src/main.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/src/main.o"
+	@${FIXDEPS} "${OBJECTDIR}/src/main.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/lib/i2c_slave.o: lib/i2c_slave.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/lib" 
+	@${RM} ${OBJECTDIR}/lib/i2c_slave.o.d 
+	@${RM} ${OBJECTDIR}/lib/i2c_slave.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/lib/i2c_slave.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/lib/i2c_slave.lst\\\" -e\\\"${OBJECTDIR}/lib/i2c_slave.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/lib/i2c_slave.o\\\" \\\"lib/i2c_slave.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/lib/i2c_slave.o"
+	@${FIXDEPS} "${OBJECTDIR}/lib/i2c_slave.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/lib/misc.o: lib/misc.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/lib" 
+	@${RM} ${OBJECTDIR}/lib/misc.o.d 
+	@${RM} ${OBJECTDIR}/lib/misc.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/lib/misc.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/lib/misc.lst\\\" -e\\\"${OBJECTDIR}/lib/misc.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/lib/misc.o\\\" \\\"lib/misc.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/lib/misc.o"
+	@${FIXDEPS} "${OBJECTDIR}/lib/misc.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/lib/txrx.o: lib/txrx.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/lib" 
+	@${RM} ${OBJECTDIR}/lib/txrx.o.d 
+	@${RM} ${OBJECTDIR}/lib/txrx.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/lib/txrx.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/lib/txrx.lst\\\" -e\\\"${OBJECTDIR}/lib/txrx.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/lib/txrx.o\\\" \\\"lib/txrx.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/lib/txrx.o"
+	@${FIXDEPS} "${OBJECTDIR}/lib/txrx.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/lib/txrx_buffer.o: lib/txrx_buffer.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/lib" 
+	@${RM} ${OBJECTDIR}/lib/txrx_buffer.o.d 
+	@${RM} ${OBJECTDIR}/lib/txrx_buffer.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/lib/txrx_buffer.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/lib/txrx_buffer.lst\\\" -e\\\"${OBJECTDIR}/lib/txrx_buffer.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/lib/txrx_buffer.o\\\" \\\"lib/txrx_buffer.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/lib/txrx_buffer.o"
+	@${FIXDEPS} "${OBJECTDIR}/lib/txrx_buffer.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/src/buttons.o: src/buttons.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/buttons.o.d 
+	@${RM} ${OBJECTDIR}/src/buttons.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/src/buttons.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/src/buttons.lst\\\" -e\\\"${OBJECTDIR}/src/buttons.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/src/buttons.o\\\" \\\"src/buttons.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/src/buttons.o"
+	@${FIXDEPS} "${OBJECTDIR}/src/buttons.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
 endif
 
 # ------------------------------------------------------------------------------------

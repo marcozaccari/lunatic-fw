@@ -9,9 +9,9 @@
             <c-extensions/>
             <cpp-extensions/>
             <header-extensions/>
-            <asminc-extensions/>
-            <make-dep-projects/>
+            <asminc-extensions>inc</asminc-extensions>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
+            <make-dep-projects/>
         </data>
     </configuration>
 </project>
