@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=
+SOURCEFILES_QUOTED_IF_SPACED=src/led.asm src/main.asm lib/misc.asm lib/usart.asm
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=
-POSSIBLE_DEPFILES=
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/led.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/lib/misc.o ${OBJECTDIR}/lib/usart.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/src/led.o.d ${OBJECTDIR}/src/main.o.d ${OBJECTDIR}/lib/misc.o.d ${OBJECTDIR}/lib/usart.o.d
 
 # Object Files
-OBJECTFILES=
+OBJECTFILES=${OBJECTDIR}/src/led.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/lib/misc.o ${OBJECTDIR}/lib/usart.o
 
 # Source Files
-SOURCEFILES=
+SOURCEFILES=src/led.asm src/main.asm lib/misc.asm lib/usart.asm
 
 
 CFLAGS=
@@ -94,7 +94,71 @@ MP_LINKER_DEBUG_OPTION=-r=ROM@0x1F00:0x1FFE -r=RAM@SHARE:0x70:0x70 -r=RAM@SHARE:
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: assemble
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
+${OBJECTDIR}/src/led.o: src/led.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/led.o.d 
+	@${RM} ${OBJECTDIR}/src/led.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/src/led.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PICKIT2=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/src/led.lst\\\" -e\\\"${OBJECTDIR}/src/led.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/src/led.o\\\" \\\"src/led.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/src/led.o"
+	@${FIXDEPS} "${OBJECTDIR}/src/led.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/src/main.o: src/main.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/main.o.d 
+	@${RM} ${OBJECTDIR}/src/main.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/src/main.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PICKIT2=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/src/main.lst\\\" -e\\\"${OBJECTDIR}/src/main.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/src/main.o\\\" \\\"src/main.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/src/main.o"
+	@${FIXDEPS} "${OBJECTDIR}/src/main.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/lib/misc.o: lib/misc.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/lib" 
+	@${RM} ${OBJECTDIR}/lib/misc.o.d 
+	@${RM} ${OBJECTDIR}/lib/misc.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/lib/misc.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PICKIT2=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/lib/misc.lst\\\" -e\\\"${OBJECTDIR}/lib/misc.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/lib/misc.o\\\" \\\"lib/misc.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/lib/misc.o"
+	@${FIXDEPS} "${OBJECTDIR}/lib/misc.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/lib/usart.o: lib/usart.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/lib" 
+	@${RM} ${OBJECTDIR}/lib/usart.o.d 
+	@${RM} ${OBJECTDIR}/lib/usart.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/lib/usart.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PICKIT2=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/lib/usart.lst\\\" -e\\\"${OBJECTDIR}/lib/usart.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/lib/usart.o\\\" \\\"lib/usart.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/lib/usart.o"
+	@${FIXDEPS} "${OBJECTDIR}/lib/usart.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
 else
+${OBJECTDIR}/src/led.o: src/led.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/led.o.d 
+	@${RM} ${OBJECTDIR}/src/led.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/src/led.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/src/led.lst\\\" -e\\\"${OBJECTDIR}/src/led.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/src/led.o\\\" \\\"src/led.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/src/led.o"
+	@${FIXDEPS} "${OBJECTDIR}/src/led.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/src/main.o: src/main.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/main.o.d 
+	@${RM} ${OBJECTDIR}/src/main.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/src/main.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/src/main.lst\\\" -e\\\"${OBJECTDIR}/src/main.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/src/main.o\\\" \\\"src/main.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/src/main.o"
+	@${FIXDEPS} "${OBJECTDIR}/src/main.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/lib/misc.o: lib/misc.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/lib" 
+	@${RM} ${OBJECTDIR}/lib/misc.o.d 
+	@${RM} ${OBJECTDIR}/lib/misc.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/lib/misc.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/lib/misc.lst\\\" -e\\\"${OBJECTDIR}/lib/misc.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/lib/misc.o\\\" \\\"lib/misc.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/lib/misc.o"
+	@${FIXDEPS} "${OBJECTDIR}/lib/misc.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/lib/usart.o: lib/usart.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/lib" 
+	@${RM} ${OBJECTDIR}/lib/usart.o.d 
+	@${RM} ${OBJECTDIR}/lib/usart.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/lib/usart.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/lib/usart.lst\\\" -e\\\"${OBJECTDIR}/lib/usart.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/lib/usart.o\\\" \\\"lib/usart.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/lib/usart.o"
+	@${FIXDEPS} "${OBJECTDIR}/lib/usart.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
 endif
 
 # ------------------------------------------------------------------------------------

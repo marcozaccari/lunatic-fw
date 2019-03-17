@@ -1,24 +1,36 @@
 ;*******************************************************************************
-;    LED WS2812b controller                                                    *
-;    2019 - Copyright Marco Zaccari info@marcozaccari.com                      *
-;                                                                              *
-;    Read from USART, write to 60 leds                                         *
-;                                                                              *
-;    Protocol:                                                                 *
-;                                                                              *
-;    1xxxxxxx Command:                                                         *
-;     1111111 Reset (all leds off, invalidate led index)                       *
-;     1xxxxxx Tune RGB:                                                        *
-;      00nnnn  R will be set to nnnn0000                                       *
-;      01nnnn  G will be set to nnnn0000                                       *
-;      10nnnn  B will be set to nnnn0000                                       *
-;     0iiiiii Set led index to i (00..59)                                      *
-;                                                                              *
-;    0----xxx Set led by index:                                                *
-;         B    B bit on                                                        *
-;          G   G bit on                                                        *
-;           R  R bit on                                                        *
-;                                                                              *
+; LED WS2812b controller
+; by Marco Zaccari info@marcozaccari.com
+;
+;    Read from USART, write to 60 leds                                         
+;
+;    Protocol:                                                                 
+;    1xxxxxxx Command:                                                         
+;     1111111 Reset (all leds off, invalidate led index)                       
+;     1xxxxxx Tune RGB:                                                        
+;      00nnnn  R will be set to nnnn0000                                       
+;      01nnnn  G will be set to nnnn0000                                       
+;      10nnnn  B will be set to nnnn0000                                       
+;     0iiiiii Set led index to i (00..59)                                      
+;                                                                              
+;    0----xxx Set led by index:                                                
+;         B    B bit on                                                        
+;          G   G bit on                                                        
+;           R  R bit on                                                        
+;
+; LEGAL NOTICE:
+; This program is free software: you can redistribute it and/or modify
+; it under the terms of the GNU General Public License as published by
+; the Free Software Foundation, either version 3 of the License, or
+; (at your option) any later version.
+;
+; This program is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+; GNU General Public License for more details.
+;
+; You should have received a copy of the GNU General Public License
+; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;*******************************************************************************
 
 #include <p16f886.inc>
