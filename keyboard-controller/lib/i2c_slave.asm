@@ -155,7 +155,7 @@ I2C_TxRx_Tx:
     
     movlw   0xFF
     banksel SSPBUF
-    movwf   SSPBUF		; buffer empty, send zero
+    movwf   SSPBUF		; buffer empty, send FF
 
     banksel SSPCON
     bsf	    SSPCON, CKP		; clock stretch

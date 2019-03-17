@@ -2,3 +2,9 @@
 /led_rgb-controller/nbproject/private/
 /buttons-controller/nbproject/private/
 /keyboard-controller/build/default/
+/buttons-controller/build/default/
+/buttons-controller/dist/default/
+
+*.cof
+*.err
+*.map

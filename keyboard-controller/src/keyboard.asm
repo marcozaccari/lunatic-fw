@@ -50,8 +50,7 @@
 
 #define	    KEYB_DEBOUNCE_SCAN_CYCLES	0
     
-GRP_KEYB_SHR    UDATA_SHR
-
+GRP_KEYB_SHR		UDATA_SHR
 ; indices
 KEYB_CURBANK		RES 1	; bank index (0..7)
 KEYB_CURBANK_COUNTER	RES 1	; bank counter index (8..1)
@@ -62,19 +61,19 @@ KEYB_CURKEY 		RES 1
 KEYB_CURBITS_NEW	RES 1	; current status of 8 keys (0 -> 1 variations)	
 KEYB_CURBITS_OFF	RES 1	; current status of 8 keys (1 -> 0 variations)
 	
-GRP_KEYB    UDATA
+GRP_KEYB		UDATA
 KEYB_CURBITS		RES 1	; current status of !PORTB	
     
-GRP_KEYB_BUFFERS    UDATA
+GRP_KEYB_BUFFERS	UDATA
 ; port status (previous and current)		
 KEYB_BITS		RES 8   ; raw bits status (by KEYB_SCAN_BITS)
 KEYB_ON_BITS_OLD	RES 8
 KEYB_ONLONG_BITS_OLD	RES 8
     
 ; 16bit counters	
-GRP_KEYB_COUNTERS1    UDATA
+GRP_KEYB_COUNTERS1	UDATA
 KEYB_TIMERS_H		RES d'64'
-GRP_KEYB_COUNTERS2    UDATA
+GRP_KEYB_COUNTERS2	UDATA
 KEYB_TIMERS_L		RES d'64'
 	 
 ; temp variables used for calculate times		
@@ -152,11 +151,11 @@ KeybScanSwitchOnBank:
 
     xorwf   TEMP1	    ; TEMP1 = KEYB_CURBITS XOR KEYB_ON_BITS_OLD (all variations)
     movf    KEYB_CURBITS, w
-    andwf   TEMP1, w	    ; W = TEMP1 AND TEMP2 (new variations)
+    andwf   TEMP1, w	    ; W = TEMP1 AND CURBITS (new variations)
     movwf   KEYB_CURBITS_NEW
 
     movf    TEMP3, w
-    andwf   TEMP1, w		; W = TEMP1 AND KEYB_ONLONG_BITS_OLD (1->0 variations)
+    andwf   TEMP1, w		; W = TEMP1 AND KEYB_ON_BITS_OLD (1->0 variations)
     movwf   KEYB_CURBITS_OFF
 
     ; save bits status

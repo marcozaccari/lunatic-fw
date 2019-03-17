@@ -1,9 +1,36 @@
 ;*******************************************************************************
-;    GEM WS1 Keyboard controller                                               *
-;    2018 - Copyright Marco Zaccari info@marcozaccari.com                      *
-;                                                                              *
-;    Read all 61 keys, with dynamics, and send status to TTL serial or I2C     *
-;                                                                              *
+; GEM WS1 Keyboard controller
+; by Marco Zaccari info@marcozaccari.com
+;
+; Read 64 keys, with dynamics (note velocity ON and OFF), 
+; and send status to TTL serial or I2C
+;
+;    Protocol (RX from this device):
+;    first byte after I2C address = buffer length to read
+;    other bytes = buffer content
+;       0xFF = invalid (out of buffer)
+;       0xC0 + 0..N = Key N is pressed
+;       0x80 + 0..N = Key N is depressed
+;       0..7F = velocity (relative to key off or key on previous byte)
+;
+;    Protocol (TX to this device):
+;    0x80 = note OFF velocity disabled
+;    0x81 = note OFF velocity enabled
+;
+;
+; LEGAL NOTICE:
+; This program is free software: you can redistribute it and/or modify
+; it under the terms of the GNU General Public License as published by
+; the Free Software Foundation, either version 3 of the License, or
+; (at your option) any later version.
+;
+; This program is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+; GNU General Public License for more details.
+;
+; You should have received a copy of the GNU General Public License
+; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;*******************************************************************************
 
 #include <p16f886.inc>
