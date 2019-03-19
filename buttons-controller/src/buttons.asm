@@ -10,14 +10,16 @@
     
 ;*******************************************************************************
 ; KA5
+;  0  Leds latch off
+;  1  Leds latch on (default)
+;    
+; KA4
 ;  0  Leds disabled / Buttons enabled
 ;  1  Leds enabled / Buttons disabled
 ;    
-; KA4  KA3   
-;  0    0   First buttons bank (1..64 buttons)
-;  0    1   Second buttons bank (65..128 buttons)
-;  1    0   First leds bank (1..64 leds)
-;  1    1   Second leds bank (65..128 leds)
+; KA3   
+;  0   First bank (1..64 buttons/leds)
+;  1   Second bank (65..128 buttons/leds)
 ;
 ; KA2  KA1  KA0
 ;  0    0    0    1..8   buttons/leds
