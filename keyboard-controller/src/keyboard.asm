@@ -106,19 +106,20 @@ KEYB_INIT
     banksel WPUB
     movwf   WPUB		; Enable all pull-up for PORT B
 
+    banksel  PORTA
     clrf    PORTA               ; clear output data latches on Ports
     
     ; flush arrays
     movlw   0x08
-    movwf   KEYB_CURKEY
-    movwf   TEMP2	    ; KEYB_CURKEY-1
+    movwf   KEYB_CURBANK_COUNTER
+    clrf    KEYB_CURBANK
     clrf    TEMP1
 KeybInitFlushBits:    
-    decf    TEMP2
-    set_array KEYB_ON_BITS_OLD, TEMP2, TEMP3
-    set_array KEYB_ONLONG_BITS_OLD, TEMP2, TEMP3
+    set_array KEYB_ON_BITS_OLD, KEYB_CURBANK, TEMP1
+    set_array KEYB_ONLONG_BITS_OLD, KEYB_CURBANK, TEMP1
 
-    decfsz  KEYB_CURKEY
+    incf    KEYB_CURBANK
+    decfsz  KEYB_CURBANK_COUNTER
     goto    KeybInitFlushBits
     return
 
@@ -589,7 +590,7 @@ KeybScanBitsBank:
     #endif
     
     movlw   KEYB_DEBOUNCE_SCAN_CYCLES
-    movf    TEMP2
+    movwf   TEMP2
 
 KeybScanBitsDebounce:
 
