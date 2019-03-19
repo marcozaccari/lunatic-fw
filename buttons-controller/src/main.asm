@@ -40,6 +40,7 @@
 #include "lib/misc.inc"    
 #include "lib/txrx.inc"
 #include "buttons.inc"
+#include "leds.inc"
 
     
 ; FUSE BITS    
@@ -107,13 +108,9 @@ ISR       CODE    0x0004
     movwf   FSR_TEMP    
     
     ; check for timer1
-    #ifdef TXRX_ISR
-	banksel PIR1
-	btfss   PIR1, TMR2IF
-	goto	ISR_TxRx
-    #else
-	banksel PIR1
-    #endif
+    banksel PIR1
+    btfss   PIR1, TMR2IF
+    goto	ISR_TxRx
 
 ISR_timer:    
     ; clear interrupt request flag
@@ -130,7 +127,6 @@ ISR_timer:
     
     led_tx_isr
        
-    #ifdef TXRX_ISR
     goto    ISR_End
 
 ISR_TxRx:
@@ -138,7 +134,6 @@ ISR_TxRx:
     ;comf    PORTC
     
     txrx_do_isr
-    #endif
     
 ISR_End:    
     
@@ -196,11 +191,12 @@ INIT
     delay_5dec
     led_on
 
-    ; initialize keyboard
-    keyb_init
+    ; initialize outputs
+    buttons_init
+    leds_init
     
-    banksel TRISA
-    bsf	    TRISA, TRISA5	; PortA-5 as input
+    ;banksel TRISA
+    ;bsf	    TRISA, TRISA5	; PortA-5 as input
     
     ; initialize Timer2
     clrf    TIMER_H
@@ -246,41 +242,32 @@ INIT
     
     
 START
+    leds_set
     
 MAIN_LOOP
     
     led_debug_on
     
     buttons_scan
+    ;leds_set
     
     led_debug_off
-    
+
     clrwdt
     
-    #ifndef TXRX_ISR
-	txrx_do
-    #endif
-
     ; read flag pin
-    banksel PORTA
-    bcf	    GLOBAL_FLAGS, GLOBAL_FLAG_PIN
-    btfsc   PORTA, 5
-    bsf	    GLOBAL_FLAGS, GLOBAL_FLAG_PIN
+    ;banksel PORTA
+    ;bcf	    GLOBAL_FLAGS, GLOBAL_FLAG_PIN
+    ;btfsc   PORTA, 5
+    ;bsf	    GLOBAL_FLAGS, GLOBAL_FLAG_PIN
     
     ; read and parse rx
     txrx_skip_if_rx_buffer_not_empty
     goto MAIN_LOOP
     txrx_get_rx_w
-    movwf   TEMP1
     ;txrx_tx_w
-    ;movf   TEMP1, w
-    andlw   0xFE
-    sublw   0x80
-    btfss   STATUS, Z	; received 0x80 or 0x81
-    goto MAIN_LOOP
-    bcf	    GLOBAL_FLAGS, GLOBAL_FLAG_NOTEOFF_VELOCITY
-    btfsc   TEMP1, 0
-    bsf	    GLOBAL_FLAGS, GLOBAL_FLAG_NOTEOFF_VELOCITY
+
+    leds_set_value_w
     
     goto MAIN_LOOP
 

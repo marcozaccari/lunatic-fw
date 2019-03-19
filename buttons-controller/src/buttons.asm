@@ -9,6 +9,10 @@
     EXTERN  GLOBAL_FLAGS
     
 ;*******************************************************************************
+; KA5
+;  0  Leds disabled / Buttons enabled
+;  1  Leds enabled / Buttons disabled
+;    
 ; KA4  KA3   
 ;  0    0   First buttons bank (1..64 buttons)
 ;  0    1   Second buttons bank (65..128 buttons)
@@ -25,19 +29,6 @@
 ;  1    1    0    49..56 buttons/leds
 ;  1    1    1    57..64 buttons/leds
 ;   
-;
-; Flusso logico:
-;
-; - Leggi interruttore #1 (con antibounce)
-;     - E' stato attivato ora?
-;         - SI: resetta il suo contatore
-;
-; - Leggi tasto interruttore #2 (con antibounce)
-;     - E' stato attivato ora?
-;         - NO: incrementa il suo contatore
-;         - SI: salva il contatore e notifica alla seriale
-;     - E' stato rilasciato ora?
-;         - SI: notifica alla seriale   
 ;*******************************************************************************
     
     
@@ -45,12 +36,12 @@
 ;    VARIABLES                                                                 *
 ;*******************************************************************************
 
-#define	    BUTTONS_DEBOUNCE_SCAN_CYCLES	8
+#define	    BUTTONS_DEBOUNCE_SCAN_CYCLES	d'64'  ; circa 7ms
     
 GRP_BUTTONS_SHR		UDATA_SHR
 ; indices
-BUTTONS_CURBANK		RES 1	; bank index (0..BUTTONS_BANKS)
-BUTTONS_CURBANK_COUNTER	RES 1	; bank counter index (BUTTONS_BANKS..1)
+BUTTONS_CURBANK		RES 1	; bank index (0..16)
+BUTTONS_CURBANK_COUNTER	RES 1	; bank counter index (0..15)
 BUTTONS_CURBANK_ABS	RES 1	; bank absolute index (0, 8, 16, 24, 32, 48, 56)
 CUR_BUTTON 		RES 1
 BUTTONS_CURBITS_ON	RES 1	; current status of 8 keys (0 -> 1 variations)	
@@ -59,8 +50,8 @@ BUTTONS_CURBITS		RES 1	; current status of !PORTB
     
 GRP_BUTTONS_BUFFERS	UDATA
 ; port status (previous and current)		
-BUTTONS_BITS		RES BUTTONS_BANKS   ; raw bits status (by BUTTONS_SCAN_BITS)
-BUTTONS_BITS_OLD	RES BUTTONS_BANKS
+BUTTONS_BITS		RES d'16'   ; raw bits status (by BUTTONS_SCAN_BITS)
+BUTTONS_BITS_OLD	RES d'16'
     
 ;*******************************************************************************
 ;    SUBROUTINES                                                               *
@@ -85,18 +76,20 @@ BUTTONS_INIT
     banksel WPUB
     movwf   WPUB		; Enable all pull-up for PORT B
 
-    clrf    PORTA               ; clear output data latches on Ports
-    
+    banksel PORTA
+    movlw   b'00100000'		; LEDS latch high
+    movwf   PORTA              ; clear output data latches on Ports
+
     ; flush arrays
-    movlw   BUTTONS_BANKS
-    movwf   CUR_BUTTON
-    movwf   TEMP2	    ; CUR_BUTTON-1
+    movlw   d'16'
+    movwf   BUTTONS_CURBANK_COUNTER
+    clrf    BUTTONS_CURBANK
     clrf    TEMP1
 ButtonsInitFlushBits:    
-    decf    TEMP2
-    set_array BUTTONS_BITS_OLD, TEMP2, TEMP3
+    set_array BUTTONS_BITS_OLD, BUTTONS_CURBANK, TEMP1
 
-    decfsz  CUR_BUTTON
+    incf    BUTTONS_CURBANK
+    decfsz  BUTTONS_CURBANK_COUNTER
     goto    ButtonsInitFlushBits
     return
 
@@ -109,7 +102,7 @@ BUTTONS_SCAN
     call    BUTTONS_SCAN_BITS
     
     ; prepare bank counter
-    movlw   BUTTONS_BANKS
+    movlw   d'16'
     movwf   BUTTONS_CURBANK_COUNTER
     clrf    BUTTONS_CURBANK
     clrf    BUTTONS_CURBANK_ABS
@@ -228,7 +221,7 @@ BUTTONS_SCAN_BITS
     bankisel BUTTONS_BITS
 
     ; prepare bank counter
-    movlw   BUTTONS_BANKS
+    movlw   d'16'
     movwf   BUTTONS_CURBANK_COUNTER
     clrf    BUTTONS_CURBANK
 
@@ -236,10 +229,11 @@ ButtonsScanBitsBank:
 
     ; output address to PORTA
     movf    BUTTONS_CURBANK, w
+    iorlw   b'00100000'	    ; LEDS latch high
     banksel PORTA
     movwf   PORTA
 
-    ; wait 2us in order to discarge the pull-ups
+    ; wait 4us in order to discarge the pull-ups
     nop
     nop
     nop
@@ -252,6 +246,18 @@ ButtonsScanBitsBank:
     nop
     nop
     
+    nop
+    nop
+    nop
+    nop
+    nop
+
+    nop
+    nop
+    nop
+    nop
+    nop
+
     ; get keys status by PORTB
     comf    PORTB, w	    ; not
 
@@ -288,8 +294,8 @@ ButtonsScanBitsBank:
     #endif
     
     movlw   BUTTONS_DEBOUNCE_SCAN_CYCLES
-    movf    TEMP2
-
+    movwf   TEMP2
+    
 ButtonsScanBitsDebounce:
 
     ; prepare indirect address
@@ -297,7 +303,7 @@ ButtonsScanBitsDebounce:
     movwf   FSR
 
     ; prepare bank counter
-    movlw   BUTTONS_BANKS
+    movlw   d'16'
     movwf   BUTTONS_CURBANK_COUNTER
     clrf    BUTTONS_CURBANK
     
@@ -305,10 +311,36 @@ ButtonsScanBitsBankDebounce:
 
     ; output address to PORTA
     movf    BUTTONS_CURBANK, w
+    iorlw   b'00100000'	    ; LEDS latch high
     banksel PORTA
     movwf   PORTA
 
-    ; get keys status by PORTB
+   ; wait 4us in order to discarge the pull-ups
+    nop
+    nop
+    nop
+    nop
+    nop
+
+    nop
+    nop
+    nop
+    nop
+    nop
+    
+    nop
+    nop
+    nop
+    nop
+    nop
+
+    nop
+    nop
+    nop
+    nop
+    nop
+
+     ; get keys status by PORTB
     comf    PORTB, w	    ; not
 
     #ifdef PROGRAMMER

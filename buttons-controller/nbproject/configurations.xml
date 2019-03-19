@@ -24,6 +24,8 @@
       <itemPath>lib/txrx_buffer.inc</itemPath>
       <itemPath>src/buttons.asm</itemPath>
       <itemPath>src/buttons.inc</itemPath>
+      <itemPath>src/leds.asm</itemPath>
+      <itemPath>src/leds.inc</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -92,7 +94,7 @@
       <PICkit2PlatformTool>
         <property key="pk2settings.3state" value="false"/>
         <property key="pk2settings.preserveee" value="false"/>
-        <property key="pk2settings.setvddvoltage" value=""/>
+        <property key="pk2settings.setvddvoltage" value="5.00"/>
         <property key="pk2settings.userpgmexec" value="true"/>
         <property key="pk2settings.usetargetpower" value="false"/>
       </PICkit2PlatformTool>

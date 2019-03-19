@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=src/main.asm lib/i2c_slave.asm lib/misc.asm lib/txrx.asm lib/txrx_buffer.asm src/buttons.asm
+SOURCEFILES_QUOTED_IF_SPACED=src/main.asm lib/i2c_slave.asm lib/misc.asm lib/txrx.asm lib/txrx_buffer.asm src/buttons.asm src/leds.asm
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/main.o ${OBJECTDIR}/lib/i2c_slave.o ${OBJECTDIR}/lib/misc.o ${OBJECTDIR}/lib/txrx.o ${OBJECTDIR}/lib/txrx_buffer.o ${OBJECTDIR}/src/buttons.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/src/main.o.d ${OBJECTDIR}/lib/i2c_slave.o.d ${OBJECTDIR}/lib/misc.o.d ${OBJECTDIR}/lib/txrx.o.d ${OBJECTDIR}/lib/txrx_buffer.o.d ${OBJECTDIR}/src/buttons.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/main.o ${OBJECTDIR}/lib/i2c_slave.o ${OBJECTDIR}/lib/misc.o ${OBJECTDIR}/lib/txrx.o ${OBJECTDIR}/lib/txrx_buffer.o ${OBJECTDIR}/src/buttons.o ${OBJECTDIR}/src/leds.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/src/main.o.d ${OBJECTDIR}/lib/i2c_slave.o.d ${OBJECTDIR}/lib/misc.o.d ${OBJECTDIR}/lib/txrx.o.d ${OBJECTDIR}/lib/txrx_buffer.o.d ${OBJECTDIR}/src/buttons.o.d ${OBJECTDIR}/src/leds.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/src/main.o ${OBJECTDIR}/lib/i2c_slave.o ${OBJECTDIR}/lib/misc.o ${OBJECTDIR}/lib/txrx.o ${OBJECTDIR}/lib/txrx_buffer.o ${OBJECTDIR}/src/buttons.o
+OBJECTFILES=${OBJECTDIR}/src/main.o ${OBJECTDIR}/lib/i2c_slave.o ${OBJECTDIR}/lib/misc.o ${OBJECTDIR}/lib/txrx.o ${OBJECTDIR}/lib/txrx_buffer.o ${OBJECTDIR}/src/buttons.o ${OBJECTDIR}/src/leds.o
 
 # Source Files
-SOURCEFILES=src/main.asm lib/i2c_slave.asm lib/misc.asm lib/txrx.asm lib/txrx_buffer.asm src/buttons.asm
+SOURCEFILES=src/main.asm lib/i2c_slave.asm lib/misc.asm lib/txrx.asm lib/txrx_buffer.asm src/buttons.asm src/leds.asm
 
 
 CFLAGS=
@@ -142,6 +142,14 @@ ${OBJECTDIR}/src/buttons.o: src/buttons.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${DEP_GEN} -d "${OBJECTDIR}/src/buttons.o"
 	@${FIXDEPS} "${OBJECTDIR}/src/buttons.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
+${OBJECTDIR}/src/leds.o: src/leds.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/leds.o.d 
+	@${RM} ${OBJECTDIR}/src/leds.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/src/leds.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PICKIT2=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/src/leds.lst\\\" -e\\\"${OBJECTDIR}/src/leds.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/src/leds.o\\\" \\\"src/leds.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/src/leds.o"
+	@${FIXDEPS} "${OBJECTDIR}/src/leds.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
 else
 ${OBJECTDIR}/src/main.o: src/main.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/src" 
@@ -190,6 +198,14 @@ ${OBJECTDIR}/src/buttons.o: src/buttons.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/src/buttons.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/src/buttons.lst\\\" -e\\\"${OBJECTDIR}/src/buttons.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/src/buttons.o\\\" \\\"src/buttons.asm\\\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/src/buttons.o"
 	@${FIXDEPS} "${OBJECTDIR}/src/buttons.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/src/leds.o: src/leds.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/leds.o.d 
+	@${RM} ${OBJECTDIR}/src/leds.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/src/leds.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/src/leds.lst\\\" -e\\\"${OBJECTDIR}/src/leds.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/src/leds.o\\\" \\\"src/leds.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/src/leds.o"
+	@${FIXDEPS} "${OBJECTDIR}/src/leds.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 endif
 
