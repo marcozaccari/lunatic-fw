@@ -20,6 +20,10 @@
       <itemPath>lib/misc.inc</itemPath>
       <itemPath>lib/usart.asm</itemPath>
       <itemPath>lib/usart.inc</itemPath>
+      <itemPath>lib/txrx.asm</itemPath>
+      <itemPath>lib/txrx.inc</itemPath>
+      <itemPath>lib/txrx_buffer.asm</itemPath>
+      <itemPath>lib/txrx_buffer.inc</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -88,7 +92,7 @@
       <PICkit2PlatformTool>
         <property key="pk2settings.3state" value="false"/>
         <property key="pk2settings.preserveee" value="false"/>
-        <property key="pk2settings.setvddvoltage" value=""/>
+        <property key="pk2settings.setvddvoltage" value="5.00"/>
         <property key="pk2settings.userpgmexec" value="true"/>
         <property key="pk2settings.usetargetpower" value="false"/>
       </PICkit2PlatformTool>

@@ -1,6 +1,6 @@
 #include <p16f886.inc>
-#include "misc.inc"
-#include "usart.inc"
+#include "lib/misc.inc"
+#include "lib/txrx.inc"
 
     
 #define WS2812_PORTA_PIN 0   
@@ -161,7 +161,7 @@ SEND_NEXT_LED
     banksel PORTA
     call    SEND_RGB
     
-    usart_do
+    txrx_do
     
     ; update counters
     ;bcf	    STATUS, C

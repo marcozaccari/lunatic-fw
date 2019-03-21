@@ -35,8 +35,8 @@
 
 #include <p16f886.inc>
 #include "main.inc"
-#include "misc.inc"    
-#include "usart.inc"
+#include "lib/misc.inc"    
+#include "lib/txrx.inc"
 #include "led.inc"
 
     
@@ -70,6 +70,7 @@ COMMAND		RES 1
  
 CMD_TUNE_VALUE	RES 1
 	    
+USART_RX_BYTE	RES 1	
  
 ;    GLOBAL TIMER_H
 ;    GLOBAL TIMER_L
@@ -115,7 +116,7 @@ INIT
     clrf    TRISC               ; PortC as output
     
     ; initialize USART
-    usart_init
+    txrx_init
 
     ; initialize leds
     led_init
@@ -167,11 +168,15 @@ START
         
 MAIN_LOOP
     
-    ; usart
-    usart_skip_if_buffer_not_empty
+    clrwdt
+
+    txrx_do
+    
+    txrx_skip_if_rx_buffer_not_empty
     goto    END_RX_DATA
 
-    usart_get_buffer		; received byte in USART_RX_BYTE
+    txrx_get_rx_w
+    movwf   USART_RX_BYTE
 
     btfss   USART_RX_BYTE, 7	; check if command or value (commands >= 0x80)
     goto    PARSE_VALUE
@@ -265,9 +270,6 @@ END_RX_DATA
     
  ;   led_debug_on
  ;   led_debug_off
-    
-    usart_do
-    clrwdt
     
     goto MAIN_LOOP
 
