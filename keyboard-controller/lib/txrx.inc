@@ -62,7 +62,7 @@ txrx_do_isr macro
 
 txrx_do macro
     #ifdef USE_USART
-    usart_txrx_do
+    usart_rx_do
     #endif
     endm
     

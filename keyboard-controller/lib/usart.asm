@@ -64,6 +64,7 @@ USART_INIT
     bcf	    TXSTA, SYNC		; enable async mode
     bsf	    TXSTA, TXEN		; enable transmission
     banksel RCSTA
+    bsf     RCSTA, CREN         ; enable receive    
     bsf	    RCSTA, SPEN		; enable serial port
     return
 
