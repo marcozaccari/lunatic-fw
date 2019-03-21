@@ -70,11 +70,12 @@ LedBitsBank:
 
     banksel LEDS_CURBANK
     movf    LEDS_CURBANK, w
-    iorlw   b'00110000'		; enable leds / disable buttons, LEDS latch high
+    iorlw   b'00010000'		; enable leds / disable buttons, LEDS latch low
     
     ; output address to PORTA
     banksel PORTA
     movwf   PORTA
+    ;bcf	    PORTA, 5	    ; latch off
     
     ; get bits status
     movf    INDF, w
@@ -88,7 +89,7 @@ LedBitsBank:
     movwf    PORTB
     comf    PORTB
     
-    bcf	    PORTA, 5	    ; latch off
+;    bcf	    PORTA, 5	    ; latch off
 
     ; wait 2us
     nop

@@ -1,7 +1,9 @@
 /keyboard-controller/nbproject/private/
-/led_rgb-controller/nbproject/private/
-/buttons-controller/nbproject/private/
 /keyboard-controller/build/default/
+/led_rgb-controller/nbproject/private/
+/led_rgb-controller/build/default/
+/led_rgb-controller/dist/default/
+/buttons-controller/nbproject/private/
 /buttons-controller/build/default/
 /buttons-controller/dist/default/
 
