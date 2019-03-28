@@ -85,8 +85,11 @@ I2C_INIT
     ; SCL, SDA are open dry now
  
     ; enable interrupts
+    #ifdef TXRX_ISR
     banksel PIE1
     bsf	    PIE1, SSPIE
+    #endif
+    
     banksel PIR1
     bcf     PIR1, SSPIF		; disable interrupt
     return
@@ -100,12 +103,25 @@ I2C_TXRX_DO
 ; (ISR) Non blocking TXRX state machine. To be called in ISR
 I2C_TXRX_DO_ISR
     ;led_tx_on    
+
+    ;banksel PIR1
+    ;bcf     PIR1, SSPIF		; disable interrupt
     
     banksel SSPBUF
     movf    SSPBUF, w		 ; read (discharge buffer)    
 
     ;goto I2C_TxRx_Tx
-    
+
+    banksel SSPCON
+    btfss   SSPCON, SSPOV
+    goto    I2C_No_Overflow
+I2C_Overflow:    
+    bcf	    SSPCON, SSPOV	; clear overflow
+    bsf	    SSPCON, CKP		; assure no clock stretch
+    ;banksel SSPBUF
+    ;movf    SSPBUF, w		 ; read (discharge buffer)    
+I2C_No_Overflow:    
+        
     banksel SSPSTAT
     btfsc   SSPSTAT, D_NOT_A    ; received data or address?
     goto    I2C_TxRx_Data	 ;  was data
@@ -143,6 +159,10 @@ I2C_TxRx_Data:
 
 I2C_TxRx_Rx:
     txrx_buffer_rx_add_w
+   
+    ;banksel SSPCON
+    ;bsf	    SSPCON, SSPOV
+
     goto I2C_TxRx_End
 
 I2C_TxRx_Tx:
@@ -155,7 +175,7 @@ I2C_TxRx_Tx:
     
     movlw   0xFF
     banksel SSPBUF
-    movwf   SSPBUF		; buffer empty, send 0xFF
+    movwf   SSPBUF		; buffer empty, send FF
 
     banksel SSPCON
     bsf	    SSPCON, CKP		; clock stretch
