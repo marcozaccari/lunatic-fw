@@ -64,6 +64,9 @@ txrx_do macro
     #ifdef USE_USART
     usart_rx_do
     #endif
+    #ifdef USE_I2C
+    i2c_txrx_do
+    #endif
     endm
     
 ; send a literal character in blocking mode

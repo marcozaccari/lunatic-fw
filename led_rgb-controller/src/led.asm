@@ -138,11 +138,14 @@ LED_INIT
 LED_OUTPUT
     ; ws2812 reset
     movlw   0x35          ; ~50 us
+    ;led_debug_on
 LED_RESET_DELAY
     nop
+
     addlw   -1
     btfss   STATUS, Z
     goto    LED_RESET_DELAY
+    ;led_debug_off
 
     ; init leds index
     movlw   STRIP_LEDS_COUNT
@@ -161,7 +164,9 @@ SEND_NEXT_LED
     banksel PORTA
     call    SEND_RGB
     
+    #ifdef USE_USART
     txrx_do
+    #endif
     
     ; update counters
     ;bcf	    STATUS, C

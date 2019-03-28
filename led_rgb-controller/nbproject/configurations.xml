@@ -24,6 +24,8 @@
       <itemPath>lib/txrx.inc</itemPath>
       <itemPath>lib/txrx_buffer.asm</itemPath>
       <itemPath>lib/txrx_buffer.inc</itemPath>
+      <itemPath>lib/i2c_slave.asm</itemPath>
+      <itemPath>lib/i2c_slave.inc</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

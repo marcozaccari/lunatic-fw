@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=src/led.asm src/main.asm lib/misc.asm lib/usart.asm lib/txrx.asm lib/txrx_buffer.asm
+SOURCEFILES_QUOTED_IF_SPACED=src/led.asm src/main.asm lib/misc.asm lib/usart.asm lib/txrx.asm lib/txrx_buffer.asm lib/i2c_slave.asm
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/led.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/lib/misc.o ${OBJECTDIR}/lib/usart.o ${OBJECTDIR}/lib/txrx.o ${OBJECTDIR}/lib/txrx_buffer.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/src/led.o.d ${OBJECTDIR}/src/main.o.d ${OBJECTDIR}/lib/misc.o.d ${OBJECTDIR}/lib/usart.o.d ${OBJECTDIR}/lib/txrx.o.d ${OBJECTDIR}/lib/txrx_buffer.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/led.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/lib/misc.o ${OBJECTDIR}/lib/usart.o ${OBJECTDIR}/lib/txrx.o ${OBJECTDIR}/lib/txrx_buffer.o ${OBJECTDIR}/lib/i2c_slave.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/src/led.o.d ${OBJECTDIR}/src/main.o.d ${OBJECTDIR}/lib/misc.o.d ${OBJECTDIR}/lib/usart.o.d ${OBJECTDIR}/lib/txrx.o.d ${OBJECTDIR}/lib/txrx_buffer.o.d ${OBJECTDIR}/lib/i2c_slave.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/src/led.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/lib/misc.o ${OBJECTDIR}/lib/usart.o ${OBJECTDIR}/lib/txrx.o ${OBJECTDIR}/lib/txrx_buffer.o
+OBJECTFILES=${OBJECTDIR}/src/led.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/lib/misc.o ${OBJECTDIR}/lib/usart.o ${OBJECTDIR}/lib/txrx.o ${OBJECTDIR}/lib/txrx_buffer.o ${OBJECTDIR}/lib/i2c_slave.o
 
 # Source Files
-SOURCEFILES=src/led.asm src/main.asm lib/misc.asm lib/usart.asm lib/txrx.asm lib/txrx_buffer.asm
+SOURCEFILES=src/led.asm src/main.asm lib/misc.asm lib/usart.asm lib/txrx.asm lib/txrx_buffer.asm lib/i2c_slave.asm
 
 
 CFLAGS=
@@ -142,6 +142,14 @@ ${OBJECTDIR}/lib/txrx_buffer.o: lib/txrx_buffer.asm  nbproject/Makefile-${CND_CO
 	@${DEP_GEN} -d "${OBJECTDIR}/lib/txrx_buffer.o"
 	@${FIXDEPS} "${OBJECTDIR}/lib/txrx_buffer.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
+${OBJECTDIR}/lib/i2c_slave.o: lib/i2c_slave.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/lib" 
+	@${RM} ${OBJECTDIR}/lib/i2c_slave.o.d 
+	@${RM} ${OBJECTDIR}/lib/i2c_slave.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/lib/i2c_slave.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PICKIT2=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/lib/i2c_slave.lst\\\" -e\\\"${OBJECTDIR}/lib/i2c_slave.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/lib/i2c_slave.o\\\" \\\"lib/i2c_slave.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/lib/i2c_slave.o"
+	@${FIXDEPS} "${OBJECTDIR}/lib/i2c_slave.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
 else
 ${OBJECTDIR}/src/led.o: src/led.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/src" 
@@ -190,6 +198,14 @@ ${OBJECTDIR}/lib/txrx_buffer.o: lib/txrx_buffer.asm  nbproject/Makefile-${CND_CO
 	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/lib/txrx_buffer.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/lib/txrx_buffer.lst\\\" -e\\\"${OBJECTDIR}/lib/txrx_buffer.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/lib/txrx_buffer.o\\\" \\\"lib/txrx_buffer.asm\\\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/lib/txrx_buffer.o"
 	@${FIXDEPS} "${OBJECTDIR}/lib/txrx_buffer.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/lib/i2c_slave.o: lib/i2c_slave.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/lib" 
+	@${RM} ${OBJECTDIR}/lib/i2c_slave.o.d 
+	@${RM} ${OBJECTDIR}/lib/i2c_slave.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/lib/i2c_slave.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/lib/i2c_slave.lst\\\" -e\\\"${OBJECTDIR}/lib/i2c_slave.err\\\" $(ASM_OPTIONS)    -o\\\"${OBJECTDIR}/lib/i2c_slave.o\\\" \\\"lib/i2c_slave.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/lib/i2c_slave.o"
+	@${FIXDEPS} "${OBJECTDIR}/lib/i2c_slave.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 endif
 

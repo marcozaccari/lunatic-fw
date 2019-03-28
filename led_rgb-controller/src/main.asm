@@ -16,7 +16,11 @@
 ;    0----xxx Set led by index:                                                
 ;         B    B bit on                                                        
 ;          G   G bit on                                                        
-;           R  R bit on                                                        
+;           R  R bit on   
+;    
+;    01------ Repaint request (confirm updates)
+;             NB: please wait at least 2.5ms after repaint request
+;
 ;
 ; LEGAL NOTICE:
 ; This program is free software: you can redistribute it and/or modify
@@ -60,7 +64,10 @@ GRP_MAIN    UDATA_SHR
 ;W_TEMP	    RES 1	; for ISR context switching
 ;STATUS_TEMP RES 1	; for ISR context switching
 
-;GLOBAL_FLAGS	    RES 1 
+NEED_REPAINT	RES 1
+    
+    
+GLOBAL_FLAGS	    RES 1 
 	    
 ;GRP_MAIN_MISC    UDATA
 ;PCLATH_TEMP RES 1
@@ -74,7 +81,7 @@ USART_RX_BYTE	RES 1
  
 ;    GLOBAL TIMER_H
 ;    GLOBAL TIMER_L
-;    GLOBAL GLOBAL_FLAGS
+    GLOBAL GLOBAL_FLAGS
  
 
 ;*******************************************************************************
@@ -165,6 +172,7 @@ START
     movwf   CMD_LED_INDEX	; led index to led 60 (null led)
     movlw   0			; all leds off
     led_init_palette_w
+    bsf	    NEED_REPAINT, 0
         
 MAIN_LOOP
     
@@ -178,6 +186,12 @@ MAIN_LOOP
     txrx_get_rx_w
     movwf   USART_RX_BYTE
 
+    
+;    led_init_palette_w
+;    goto    END_RX_DATA
+    
+    
+    
     btfss   USART_RX_BYTE, 7	; check if command or value (commands >= 0x80)
     goto    PARSE_VALUE
 
@@ -202,6 +216,7 @@ PARSE_COMMAND_RESET		; check for reset 0xFF
     ; perform reset
     movlw   0			; all leds off
     led_init_palette_w
+    bsf	    NEED_REPAINT, 0
     movlw   0x3C
     movwf   CMD_LED_INDEX	; led index to led 60 (null led)
     goto    PARSE_END
@@ -253,14 +268,28 @@ PARSE_COMMAND_TUNE_R		; tune R
     goto    PARSE_END
     
 PARSE_VALUE    
+    btfsc   USART_RX_BYTE, 6	; check if repaint value
+    goto    PARSE_REPAINT
+    
     led_set_index_value CMD_LED_INDEX, USART_RX_BYTE
+    goto PARSE_END
+
+PARSE_REPAINT
+    bsf	    NEED_REPAINT, 0
+    goto    END_RX_DATA
     
 PARSE_END    
     goto    MAIN_LOOP		; check for more data
     
 END_RX_DATA    
+
+    btfss   NEED_REPAINT, 0
+    goto MAIN_LOOP
     
-    led_output
+    ;led_debug_on
+    led_output		; 2.2ms
+    ;led_debug_off    
+    bcf	    NEED_REPAINT, 0
 
  ;   banksel PORTA
  ;   led_debug_on
