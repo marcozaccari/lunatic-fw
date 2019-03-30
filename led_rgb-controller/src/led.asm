@@ -18,6 +18,8 @@
     GLOBAL LED_INIT
     GLOBAL LED_OUTPUT
     GLOBAL INIT_LEDS_TO_PALETTE_IDX
+    
+    GLOBAL LED_DEMO_DO
 
     GLOBAL RED_ON_VALUE
     GLOBAL GREEN_ON_VALUE
@@ -30,7 +32,7 @@
 ;    VARIABLES                                                                 *
 ;*******************************************************************************
     
-GRP_LED    UDATA_SHR
+GRP_LED		UDATA_SHR
 
 CUR_LED_IDX	RES 1
 
@@ -46,6 +48,11 @@ BLUE_ON_VALUE	RES 1
 PALETTE_VALUE	RES 1	
 	
 LEDS_PALETTE	RES d'61'	; byte 60 = safe index (for protocol overflow)
+	
+	
+GRP_LED_DEMO	UDATA
+CUR_DEMO_IDX	RES 1
+CUR_DEMO_COL	RES 1	
 
 
 ;*******************************************************************************
@@ -131,6 +138,10 @@ LED_INIT
     ; init palette indeces to zero
     movlw   0
     call    INIT_LEDS_TO_PALETTE_IDX
+    
+    clrf    CUR_DEMO_IDX
+    movlw   1
+    movwf   CUR_DEMO_COL
     
     ;call    LED_OUTPUT
     ;return
@@ -407,6 +418,44 @@ INIT_NEXT_LED
     decf    CUR_LED_IDX
     btfss   STATUS, C
     goto    INIT_NEXT_LED
+    return
+
+
+LED_DEMO_DO
+    banksel CUR_DEMO_IDX
+    incf    CUR_DEMO_IDX
+    
+    movlw   d'255'
+    subwf   CUR_DEMO_IDX, w
+    btfss   STATUS, Z
+    goto    DemoPaint
+
+DemoNextColor:    
+    clrf    CUR_DEMO_IDX
+    incf    CUR_DEMO_COL
+    movlw   8
+    subwf   CUR_DEMO_COL, w
+    btfss   STATUS, Z
+    goto    DemoPaint
+    
+DemoRestart:
+    movlw   1
+    movwf   CUR_DEMO_COL
+    
+DemoPaint:    
+    movlw   0
+    call INIT_LEDS_TO_PALETTE_IDX
+    
+    banksel CUR_DEMO_IDX
+    movlw   d'60'
+    subwf   CUR_DEMO_IDX, w
+    btfsc   STATUS, C
+    goto    DemoSend
+
+    set_array LEDS_PALETTE, CUR_DEMO_IDX, CUR_DEMO_COL
+
+DemoSend:    
+    call LED_OUTPUT
     return
     
     END

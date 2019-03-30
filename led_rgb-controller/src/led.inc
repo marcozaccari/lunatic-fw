@@ -1,6 +1,8 @@
     EXTERN LED_INIT
     EXTERN LED_OUTPUT
     EXTERN INIT_LEDS_TO_PALETTE_IDX
+
+    EXTERN LED_DEMO_DO
     
     EXTERN RED_ON_VALUE
     EXTERN GREEN_ON_VALUE
@@ -35,4 +37,8 @@ led_set_index_value macro led_index, led_palette_value
     movwf   led_index	    ; overflow -> set index to 60
  
     set_array LEDS_PALETTE, led_index, led_palette_value
+    endm
+    
+led_demo_do macro
+    call LED_DEMO_DO
     endm

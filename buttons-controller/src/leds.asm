@@ -3,6 +3,7 @@
 #include "lib/misc.inc"
 
     GLOBAL  LEDS_INIT
+    GLOBAL  LEDS_RESET
     GLOBAL  LEDS_SET
     GLOBAL  LEDS_SET_VALUE
     
@@ -28,19 +29,41 @@ LEDS_BITS		RES d'16'  ; raw bits status
 LEDS CODE
 
 ;*******************************************
-; Initialize ports and arrays 
+; Initialize ports and arrays (all leds on)
 LEDS_INIT
     ; flush arrays
     movlw   d'16'
     movwf   LEDS_CURBANK_COUNTER
     clrf    LEDS_CURBANK
-    clrf    TEMP1
+    movlw   0xFF
+    movwf   TEMP1
 LedsInitFlushBits:    
     set_array LEDS_BITS, LEDS_CURBANK, TEMP1
     
     incf    LEDS_CURBANK
     decfsz  LEDS_CURBANK_COUNTER
     goto    LedsInitFlushBits
+    
+    call    LEDS_SET
+    return
+    
+
+;*******************************************
+; All leds off 
+LEDS_RESET    
+    ; flush arrays
+    movlw   d'16'
+    movwf   LEDS_CURBANK_COUNTER
+    clrf    LEDS_CURBANK
+    clrf    TEMP1
+LedsResetFlushBits:    
+    set_array LEDS_BITS, LEDS_CURBANK, TEMP1
+    
+    incf    LEDS_CURBANK
+    decfsz  LEDS_CURBANK_COUNTER
+    goto    LedsResetFlushBits
+    
+    call    LEDS_SET
     return
     
     

@@ -1,4 +1,5 @@
     EXTERN LEDS_INIT
+    EXTERN LEDS_RESET
     EXTERN LEDS_SET
     EXTERN LEDS_SET_VALUE
     
@@ -18,4 +19,8 @@ leds_set macro
 
 leds_set_value_w macro
     call	LEDS_SET_VALUE
+    endm
+    
+leds_reset macro
+    call	LEDS_RESET
     endm

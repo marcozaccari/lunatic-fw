@@ -129,6 +129,7 @@ INIT
     led_init
     
     ; assure output leds to off
+    #ifdef PROGRAMMER
     delay_1sec
     led_on
     led_output
@@ -150,6 +151,8 @@ INIT
     delay_5dec
     led_on
     led_output
+    #endif
+    led_on
 
     ; set watchdog
     banksel INTCON
@@ -174,6 +177,35 @@ START
     led_init_palette_w
     bsf	    NEED_REPAINT, 0
         
+    #ifdef PROGRAMMER
+    goto    DemoEnd
+    #endif
+DEMO
+    clrwdt
+    led_demo_do
+    
+DemoDelay:
+    movlw   0x20
+    movwf   TEMP2
+DemoDelayReset:
+    movlw   0x40
+    movwf   TEMP1
+DemoDelayLoop:
+    txrx_do
+    txrx_skip_if_rx_buffer_empty
+    goto DemoEnd
+    
+    decfsz  TEMP1
+    goto    DemoDelayLoop
+    clrwdt
+    decfsz  TEMP2
+    goto    DemoDelayReset
+    goto DEMO
+DemoEnd:    
+    movlw   0			; all leds off
+    led_init_palette_w
+    bsf	    NEED_REPAINT, 0
+    
 MAIN_LOOP
     
     clrwdt

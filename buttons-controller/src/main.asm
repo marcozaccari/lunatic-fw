@@ -13,11 +13,10 @@
 ;       0..N = Button N is depressed
 ;
 ;    Protocol (TX to this device):
-;    first byte = 0x80 + Led index
-;    second byte = Led state
-;       1 = OFF
-;       2 = ON
-;       3 = FLASH
+;    siiiiiii where:
+;      i = Led index (0..126)
+;      s = state (0 = OFF; 1 = ON)
+;    0xFF = reset (all leds off)
 ;
 ;
 ; LEGAL NOTICE:
@@ -176,6 +175,7 @@ INIT
     ; initialize TXRX
     txrx_init
     
+    #ifdef PROGRAMMER
     delay_1sec
     led_on
     delay_5dec
@@ -189,6 +189,8 @@ INIT
     delay_5dec
     led_off
     delay_5dec
+    led_on
+    #endif
     led_on
 
     ; initialize outputs
@@ -267,6 +269,16 @@ MAIN_LOOP
     txrx_get_rx_w
     ;txrx_tx_w
 
+    movwf   TEMP1
+    movlw   0xFF
+    subwf   TEMP1, w
+    btfss   STATUS, Z
+    goto    LedSetValue
+    leds_reset
+    goto    MAIN_LOOP
+    
+LedSetValue:
+    movf   TEMP1, w
     leds_set_value_w
     
     goto MAIN_LOOP
